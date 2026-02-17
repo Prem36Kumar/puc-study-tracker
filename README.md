@@ -1,1 +1,0 @@
-# puc-study-tracker
