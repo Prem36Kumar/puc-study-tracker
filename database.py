@@ -44,7 +44,18 @@ def create_tables():
 
 def add_subject(name):
     with connect() as conn:
-        conn.execute("INSERT INTO subjects (name) VALUES (?)", (name,))
+        cursor = conn.cursor()
+
+        # Check if subject already exists
+        cursor.execute("SELECT * FROM subjects WHERE name = ?", (name,))
+        existing = cursor.fetchone()
+
+        if existing:
+            print("Subject already exists!")
+            return
+
+        cursor.execute("INSERT INTO subjects (name) VALUES (?)", (name,))
+        print("Subject added successfully!")
 
 
 def get_all_subjects():
